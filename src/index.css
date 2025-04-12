@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+body {
+    background-color: black;
+}
+
+@keyframes typingLoop {
+    0% {
+        width: 0;
+    }
+
+    40% {
+        width: 100%;
+    }
+
+    60% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes blinkCursor {
+
+    0%,
+    100% {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: white;
+    }
+}
+
+.typewriter-container {
+    display: inline-block;
+    width: fit-content;
+}
+
+.typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    border-right: 2px solid white; /* blinking vertical line */
+    animation: typingLoop 4s steps(9) infinite, blinkCursor 0.7s step-end infinite;
+}
