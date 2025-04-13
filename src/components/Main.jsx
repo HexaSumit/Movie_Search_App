@@ -1,14 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MovieContext } from "../context/Moviecontext";
+import Loader from "./Loader";
 
 function Main() {
   const { toggle } = useContext(MovieContext);
+  const [loading,setLoading]=useState(true);
+
+  useEffect(() => {
+    // Show loader for 3 seconds
+    const timer = setTimeout(() => setLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className={`min-h-screen w-full flex flex-col items-center justify-center px-4 ${toggle ? "bg-black text-white" : "bg-white text-black"}`}>
+    <>
+    {loading?(
+      <Loader />
+    ):(
+      <div className={`min-h-screen w-full flex flex-col items-center justify-center px-4 ${toggle ? "bg-black text-white" : "bg-white text-black"}`}>
 
-      {/* Centered Content */}
       <div className="text-center flex flex-col items-center justify-center gap-6 w-full px-4">
         <span className=" typewriter-container">
           <h2 style={{ color: "#564d4d" }} className="text-4xl sm:text-5xl font-semibold typewriter">
@@ -41,6 +52,8 @@ function Main() {
         </span>
       </div>
     </div>
+    )}
+    </>
   );
 }
 
