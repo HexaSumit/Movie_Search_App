@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import '../App.css'
 import { MovieContext } from '../context/Moviecontext';
 
 function Loader() {
