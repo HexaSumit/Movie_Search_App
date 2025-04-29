@@ -32,8 +32,4 @@ function Card({ data }) {
 }
 
 export default Card;
-{/* <span></span> */}
- {/* <span onClick={()=>setfavourite((prev)=>!prev)}>
-            
-            {console.log(favourite)}
-          </span> */}
+
