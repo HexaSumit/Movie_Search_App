@@ -10,7 +10,7 @@ function Card({ data }) {
   };
 
   return (
-    <Link to='/MovieDetails'>
+    <Link to={`/movies/details/${data.imdbID}`}>
       <div 
         className="rounded-lg flex flex-col items-center cursor-pointer"
         onClick={() => handleClick(data)}
