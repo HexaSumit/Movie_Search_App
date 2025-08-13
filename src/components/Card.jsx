@@ -16,10 +16,13 @@ function Card({ data }) {
         onClick={() => handleClick(data)}
       >
         <img
-          src={data.Poster}
-          alt={data.Title}
-          className="w-[90%] max-w-[270px] h-auto sm:h-[360px] object-cover rounded-md"
-        />
+  src={data.Poster}
+  alt={data.Title}
+  className="w-[90%] max-w-[270px] h-auto sm:h-[360px] object-cover rounded-md"
+  onError={(e) => {
+    e.target.src = "/fallback.jpg";
+  }}
+/>
         <h2 className={`text-lg font-semibold mt-2 text-center ${toggle ? "text-white" : "text-black"}`}>
           {data.Title}
         </h2>

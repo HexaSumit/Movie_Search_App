@@ -19,9 +19,11 @@ function MovieDetails() {
                         src={selectedMovie.Poster}
                         alt={selectedMovie.Title}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                            e.target.src = "/fallback.jpg";
+                        }}
                     />
                 </div>
-
 
                 {/* Right Side - Movie Details */}
                 <div className="w-full md:w-1/2 p-6 sm:p-8 flex flex-col justify-center">

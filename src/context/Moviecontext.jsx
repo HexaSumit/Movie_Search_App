@@ -3,10 +3,9 @@ import { createContext, useEffect, useState } from "react";
 
 export const MovieContext = createContext()
 
-
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
-const TRENDING_MOVIES_URL = `https://www.omdbapi.com/?s=popular&type=movie&apikey=${API_KEY}`; // Trending movies
-const TRENDING_SERIES_URL = `https://www.omdbapi.com/?s=popular&type=series&apikey=${API_KEY}`; // Trending series
+const TRENDING_MOVIES_URL = `https://www.omdbapi.com/?s=popular&type=movie&apikey=${API_KEY}`;
+const TRENDING_SERIES_URL = `https://www.omdbapi.com/?s=popular&type=series&apikey=${API_KEY}`;
 
 function MovieProvider({ children }) {
 
@@ -17,12 +16,10 @@ function MovieProvider({ children }) {
     const [noSeriesFound, setNoSeriesFound] = useState(false);
 
     const [selectedMovie, setSelectedMovie] = useState(null)
-
     const [toggle, setToggle] = useState(true)
-
     const [sortOrder, setSortOrder] = useState("");
-
     const [favourite, setfavourite] = useState(false)
+
     const data = {
         searchQuery,
         setSearchQuery,
@@ -53,13 +50,16 @@ function MovieProvider({ children }) {
 
                 const res = await fetch(url);
                 const data = await res.json();
-                const filteredMovies = data.Search?.filter(movie => movie.Poster !== "N/A") || [];
 
-                // 👉 Sorting based on title
+                const filteredMovies = data.Search?.map(movie => ({
+                    ...movie,
+                    Poster: movie.Poster && movie.Poster !== "N/A" ? movie.Poster : "/fallback.jpg"
+                })) || [];
+
                 if (sortOrder === "asc") {
-                    filteredMovies.sort((a, b) => a.Title.localeCompare(b.Title)); // A–Z
+                    filteredMovies.sort((a, b) => a.Title.localeCompare(b.Title));
                 } else if (sortOrder === "desc") {
-                    filteredMovies.sort((a, b) => b.Title.localeCompare(a.Title)); // Z–A
+                    filteredMovies.sort((a, b) => b.Title.localeCompare(a.Title));
                 }
 
                 setMovieResults(filteredMovies);
@@ -70,7 +70,7 @@ function MovieProvider({ children }) {
         };
 
         fetchMovies();
-    }, [searchQuery,sortOrder]);
+    }, [searchQuery, sortOrder]);
 
     useEffect(() => {
         const fetchSeries = async () => {
@@ -81,13 +81,16 @@ function MovieProvider({ children }) {
 
                 const res = await fetch(url);
                 const data = await res.json();
-                const filteredSeries = data.Search?.filter(series => series.Poster !== "N/A") || [];
 
-                // 👉 Sorting based on title
+                const filteredSeries = data.Search?.map(series => ({
+                    ...series,
+                    Poster: series.Poster && series.Poster !== "N/A" ? series.Poster : "/fallback.jpg"
+                })) || [];
+
                 if (sortOrder === "asc") {
-                    filteredSeries.sort((a, b) => a.Title.localeCompare(b.Title)); // A–Z
+                    filteredSeries.sort((a, b) => a.Title.localeCompare(b.Title));
                 } else if (sortOrder === "desc") {
-                    filteredSeries.sort((a, b) => b.Title.localeCompare(a.Title)); // Z–A
+                    filteredSeries.sort((a, b) => b.Title.localeCompare(a.Title));
                 }
 
                 setSeriesResults(filteredSeries);
@@ -98,8 +101,7 @@ function MovieProvider({ children }) {
         };
 
         fetchSeries();
-    }, [searchQuery,sortOrder]);
-
+    }, [searchQuery, sortOrder]);
 
     return (
         <div>
